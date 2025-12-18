@@ -36,7 +36,7 @@ Training notebooks are included to help you customize and fine-tune models to su
 
 Below is the final annotated output video.
 
-[![BasketBall Analysis Demo Video](https://img.youtube.com/vi/xWpP0LjEUng/0.jpg)](https://youtu.be/xWpP0LjEUng)
+[![BasketBall Analysis Demo Video]
 
 ## 🔧 Prerequisites
 
@@ -81,11 +81,11 @@ This repository relies on trained models for detecting basketballs, players, and
 1. Download the Pretrained Weights
 
    - ball_detector_model.pt  
-     (https://drive.google.com/file/d/1KejdrcEnto2AKjdgdo1U1syr5gODp6EL/view?usp=sharing)
+     (https://drive.google.com/file/d/1DHkJgrv5ImoS-3JPRJj3tpZk2pcfQLMl/view?usp=sharing)
    - court_keypoint_detector.pt  
-     (https://drive.google.com/file/d/1nGoG-pUkSg4bWAUIeQ8aN6n7O1fOkXU0/view?usp=sharing)
+     (https://drive.google.com/file/d/1_RR4FSlwMurDtB6-gcnAu2sQB5FmrWmZ/view?usp=sharing)
    - player_detector.pt  
-     (https://drive.google.com/file/d/1fVBLZtPy9Yu6Tf186oS4siotkioHBLHy/view?usp=sharing)
+     (https://drive.google.com/file/d/1Fxzsy4CDKCQqVEnppBKMtSaYUgtsGJef/view?usp=sharing)
 
    Simply download these files and place them into the `models/` folder in your project. This allows you to run the pipelines without manually retraining.
 
