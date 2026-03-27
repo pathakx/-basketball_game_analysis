@@ -51,7 +51,16 @@ Setup your environment locally or via Docker.
 
 ### Python Environment
 
-1. Create a virtual environment (e.g., venv/conda).
+1. Create and activate a virtual environment:
+
+```bash
+python -m venv venv
+# Windows
+.\venv\Scripts\Activate.ps1
+# macOS/Linux
+source venv/bin/activate
+```
+
 2. Install the required packages:
 
 ```bash
@@ -90,7 +99,7 @@ This repository relies on trained models for detecting basketballs, players, and
    Simply download these files and place them into the `models/` folder in your project. This allows you to run the pipelines without manually retraining.
 
 2. Train Your Own Models  
-   The training scripts are provided in the `training_notebooks/` folder. These Jupyter notebooks use Roboflow datasets and the Ultralytics YOLO frameworks to train various detection tasks:
+   The training scripts are provided in the `notebooks/` folder. These Jupyter notebooks use Roboflow datasets and the Ultralytics YOLO frameworks to train various detection tasks:
 
    - `basketball_ball_training.ipynb`: Trains a basketball ball detector (using YOLOv5). Incorporates motion blur augmentations to improve ball detection accuracy on fast-moving game footage.
    - `basketball_court_keypoint_training.ipynb`: Uses YOLOv8 to detect keypoints on the court (e.g., lines, corners, key zones).
@@ -109,7 +118,7 @@ You can run this repository’s core functionality (analysis pipeline) with Pyth
 Run the main entry point with your chosen video file:
 
 ```bash
-python main.py path_to_input_video.mp4 --output_video output_videos/output_result.avi
+python src/main.py data/input/video_1.mp4 --output_video data/output/output_result.avi
 ```
 
 - By default, intermediate “stubs” (pickled detection results) are used if found, allowing you to skip repeated detection/tracking.
@@ -137,32 +146,24 @@ docker run \
 
 ## 🏰 Project Structure
 
-- `main.py`  
-  – Orchestrates the entire pipeline: reading video frames, running detection/tracking, team assignment, drawing results, and saving the output video.
-
-- `trackers/`  
-  – Houses `PlayerTracker` and `BallTracker`, which use detection models to generate bounding boxes and track objects across frames.
-
-- `utils/`  
-  – Contains helper functions like `bbox_utils.py` for geometric calculations, `stubs_utils.py` for reading and saving intermediate results, and `video_utils.py` for reading/saving videos.
-
-- `drawers/`  
-  – Contains classes that overlay bounding boxes, court lines, passes, etc., onto frames.
-
-- `ball_aquisition/`  
-  – Logic for identifying which player is in possession of the ball.
-
-- `pass_and_interception_detector/`  
-  – Identifies passing events and interceptions.
-
-- `court_keypoint_detector/`  
-  – Detects lines and keypoints on the court using the specified model.
-
-- `team_assigner/`  
-  – Uses zero-shot classification (Hugging Face or similar) to assign players to teams based on jersey color.
-
-- `configs/`  
-  – Holds default paths for models, stubs, and output video.
+```
+basketball_analysis/
+├── config/              # Centralized configuration (model paths, output paths)
+├── src/                 # All source code
+│   ├── main.py          # Entry point — orchestrates the full pipeline
+│   ├── trackers/        # Player & ball detection + tracking (YOLO + ByteTrack)
+│   ├── detectors/       # Court keypoint & pass/interception detectors
+│   ├── acquisition/     # Ball possession detection logic
+│   ├── analytics/       # Team assignment, speed & distance calculators
+│   ├── visualization/   # Drawers & tactical view converter
+│   └── utils/           # Video I/O, bbox helpers, stub caching
+├── models/              # YOLO model weights (.pt files)
+├── data/                # Input/output video files
+├── assets/              # Court reference images
+├── notebooks/           # Training notebooks (YOLO fine-tuning)
+├── requirements.txt     # Python dependencies
+└── Dockerfile           # Container setup
+```
 
 ---
 
